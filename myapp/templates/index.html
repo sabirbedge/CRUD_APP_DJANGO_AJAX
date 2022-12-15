@@ -1,0 +1,64 @@
+ {% load static %} 
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CRUD APP IN DJANGO USING AJAX</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel='stylesheet' href='{% static 'css/mystyle.css' %}'/>
+    </head>
+    <body style='background-image:url({% static 'images/bg.png' %});background-size:cover'>
+        <div class='row'>
+            <h2 class=' alert alert-info'><b>CRUD APP IN DJANGO USING AJAX</b></h2>
+            <div class='col-sm-1'></div>
+            <div class='col-sm-3'><br>     
+                <h4 class='text-center alert alert-info'>Add/Update Student Details</h4><br> 
+                <center><div id='msg' class='text-danger text-capitalize text-center  '> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  </div> </center>
+            <form action='' method='post'>                
+            {% csrf_token %}
+            {% for x in form %}
+            <br>     
+            {{x}}
+            {% endfor %}<br>
+            <input type='hidden' value='save' id='type' name='type'/>
+            <input type='hidden' value='0' id='hideid' name='hideid'/>
+            <input type='button' value='Save' class='btn btn-success' id='btnSave'/>
+            </form>
+    </div>
+    <div class='col-sm-1'></div>
+    <div class='col-sm-6'><br>     
+        <h4 class='text-center alert alert-info'>Student Details</h4><br> 
+        <center><div id='msg2' class='text-danger text-capitalize text-center  '> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  </div> </center>
+        <table class='table table-bordered table-striped table-hover'>
+            <thead class='bg-primary'>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>City</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class='text-light bg-info'>
+                {% for x in param %}
+                <tr>
+                    <td>{{x.id}}</td>
+                    <td>{{x.nm}}</td>
+                    <td>{{x.mob}}</td>
+                    <td>{{x.city}}</td>
+                    <td><center>
+                        <button id='{{x.id}}' class='btn btn-edit'>  <span class='glyphicon glyphicon-edit text-success' /></button> 
+                        <button id='{{x.id}}' class='btn btn-delete'>  <span class='glyphicon glyphicon-trash text-danger' /></button></center>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</form>
+</div>  
+    </div>
+        {% include 'ajax.html' %}
+    </body>
+</html>

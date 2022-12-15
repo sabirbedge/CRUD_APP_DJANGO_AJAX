@@ -1,0 +1,122 @@
+<script>
+    //insert data
+    var crf=$('input[name=csrfmiddlewaretoken]').val()
+    $('#btnSave').click(function(){
+        var nm=$('#idnm').val();
+        var mob=$('#idmob').val();
+        var city=$('#idcity').val();
+        var type=$("#type").val();
+        var hideid=$("#hideid").val();
+        var crf=$('input[name=csrfmiddlewaretoken]').val()
+        var op='';
+        var msg='';
+        if(nm=='' || mob==''||city==''){
+            $('#msg').text('Fill the form').addClass('alert alert-danger');
+            $('#msg2').text('').removeClass('alert alert-success');
+            
+        }else{
+            $('#msg').text('').removeClass('alert alert-danger');
+            //$('tbody').remove();
+           data={name:nm,mobile:mob,addr:city,type:type,hideid:hideid,csrfmiddlewaretoken:crf}
+            $.ajax({
+                url:"{% url 'save' %}",
+                method:'POST',
+                data:data,
+                success:function(data){
+                    //console.log(data.data_list);
+                $('#msg2').text('').removeClass('alert alert-success alert-dismissible');
+                    
+                    if(data.status=="save"){
+                        x=data.data_list;
+                        $('#msg').text('Data Submitted Successfully...').addClass('alert alert-success');
+                        for(i=0;i<x.length;i++){
+                            op+="<tr><td>"+x[i].id+"</td><td>"+x[i].nm+"</td><td>"+x[i].mob+"</td><td>"+x[i].city+"</td><td> <center><button id='"+x[i].id+"' class='btn btn-edit'>  <span class='glyphicon glyphicon-edit text-success' /></button><button id='"+x[i].id+"' class='btn btn-delete'>  <span class='glyphicon glyphicon-trash text-danger' /></button></center></td></tr>";
+                        }
+                        $('tbody').html(op);
+                        clr();
+                    }
+                    if(data.status=="edited"){
+                        x=data.data_list;
+                        $('tbody').empty();
+                        $('#msg').text('Data Edited Successfully...').addClass('alert alert-success');
+                        for(i=0;i<x.length;i++){
+                            op+="<tr><td>"+x[i].id+"</td><td>"+x[i].nm+"</td><td>"+x[i].mob+"</td><td>"+x[i].city+"</td><td> <center><button id='"+x[i].id+"' class='btn btn-edit'>  <span class='glyphicon glyphicon-edit text-success' /></button><button id='"+x[i].id+"' class='btn btn-delete'>  <span class='glyphicon glyphicon-trash text-danger' /></button></center></td></tr>";
+                        }
+                        $('tbody').html(op);
+                        clr();
+                    }
+                }
+            });
+
+        }
+    });
+
+    function clr(){
+        $('#idnm').val("");
+        $('#idmob').val("");
+        $('#idcity').val("");
+        $("#hideid").val("0");
+        $("#type").val("save");
+    }
+
+    //delete data
+    $('tbody').on('click','.btn-delete',function(){
+        //console.log($(this).attr('id'));
+        var id=$(this).attr('id');
+        var mythis=this;
+        console.log(id);
+        op=''
+        data={delid:id,csrfmiddlewaretoken:crf}
+        $.ajax({
+            url:"{% url 'delete' %}",
+            method:'POST',
+            data:data,
+            success:function(data){
+                $('#msg').text('').removeClass('alert alert-success');
+                //console.log(data.data_list);
+                x=data.data_list;
+                if(data.status="del"){
+                    $('#msg2').text('Data Deleted Successfully...').addClass('alert alert-success');
+                    $(mythis).closest('tr').fadeOut(1000);
+                    clr();
+                }
+                else{
+                    $('#msg2').text('Unable To Delete Data...').addClass('alert alert-danger');
+                    clr();
+                }
+            }
+        });
+    });
+
+    
+    //edit data
+    $('tbody').on('click','.btn-edit',function(){
+        var id=$(this).attr('id');
+        //var mythis=this;
+        //$('#msg1').text('').removeClass('alert alert-success alert-danger');
+        $("#type").val('getdata');
+        var type=$("#type").val();
+        op=''
+        data={editid:id,type:type,csrfmiddlewaretoken:crf}
+        $.ajax({
+            url:"{% url 'edit' %}",
+            method:'POST',
+            data:data,
+            success:function(data){
+                x=data.data_list;
+                if(data.status="got"){
+                    $('#msg').text('').removeClass('alert alert-success alert-danger');
+                    $('#msg2').text('').removeClass('alert alert-success alert-danger');
+                    $('#idnm').val(x[0].nm);
+                    $('#idmob').val(x[0].mob);
+                    $('#idcity').val(x[0].city);
+                    $("#type").val('editdata');
+                    $("#hideid").val(x[0].id);
+                }else{
+                    $('#msg2').text('Unable To Fetch Data...').addClass('alert alert-danger');
+                    clr();
+                }
+            }
+        });
+    });
+</script>
