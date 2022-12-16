@@ -22,6 +22,7 @@ urlpatterns = [
     path('save/', views.save,name='save'),
     path('delete/', views.delete,name='delete'),
     path('edit/', views.edit,name='edit'),
+    path('search/', views.search,name='search'),
     #path('update/<int:id>', views.update),
     #path('updateData/', views.updateData),
     #path('delete/<int:id>', views.delete),

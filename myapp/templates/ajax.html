@@ -119,4 +119,32 @@
             }
         });
     });
+
+    $("#searchText").keyup(function(){
+        clr();
+        $('#msg').text('').removeClass('alert alert-success alert-danger');
+        $('#msg2').text('').removeClass('alert alert-success alert-danger');
+        var searchText=$(this).val();
+        op='';
+        data={searchText:searchText,csrfmiddlewaretoken:crf}
+        $.ajax({
+            url:'{% url 'search' %}',
+            method:'POST',
+            data:data,
+            success:function(data){
+                x=data.data_list;
+                //console.log(data.status)
+                if(data.status=='searched'){
+                    for(i=0;i<x.length;i++){
+                        op+="<tr><td>"+x[i].id+"</td><td>"+x[i].nm+"</td><td>"+x[i].mob+"</td><td>"+x[i].city+"</td><td> <center><button id='"+x[i].id+"' class='btn btn-edit'>  <span class='glyphicon glyphicon-edit text-success' /></button><button id='"+x[i].id+"' class='btn btn-delete'>  <span class='glyphicon glyphicon-trash text-danger' /></button></center></td></tr>";
+                    }
+                    $('tbody').html(op);
+                    
+                }if(data.status=='notsearched'){
+                    op+="<tr><td colspan='5'><center>No Data Found...</center></td></tr>";
+                    $('tbody').html(op);
+                }
+            }
+        });
+    });
 </script>

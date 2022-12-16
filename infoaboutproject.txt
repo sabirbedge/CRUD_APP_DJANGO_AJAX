@@ -1,0 +1,3 @@
+In userapp,we perform crud operation without ajax
+
+In myapp,we perform crud operation with ajax

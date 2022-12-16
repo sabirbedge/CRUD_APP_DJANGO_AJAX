@@ -11,12 +11,12 @@
     </head>
     <body style='background-image:url({% static 'images/bg.png' %});background-size:cover'>
         <div class='row'>
-            <h2 class=' alert alert-info'><b>CRUD APP IN DJANGO USING AJAX</b></h2>
+            <h2 class=' alert alert-info text-center'><b>CRUD APP IN DJANGO USING AJAX</b></h2>
             <div class='col-sm-1'></div>
-            <div class='col-sm-3'><br>     
+            <div class='col-sm-3'>  
                 <h4 class='text-center alert alert-info'>Add/Update Student Details</h4><br> 
                 <center><div id='msg' class='text-danger text-capitalize text-center  '> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  </div> </center>
-            <form action='' method='post'>                
+            <form action='' method='post'>              
             {% csrf_token %}
             {% for x in form %}
             <br>     
@@ -29,8 +29,9 @@
     </div>
     <div class='col-sm-1'></div>
     <div class='col-sm-6'><br>     
-        <h4 class='text-center alert alert-info'>Student Details</h4><br> 
+        <h4 class='text-center alert alert-info'>Student Details</h4>
         <center><div id='msg2' class='text-danger text-capitalize text-center  '> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  </div> </center>
+        <input type='text' placeholder='Enter Name to be searched...' id='searchText' name='searchText' class='form-control'/>  <br>
         <table class='table table-bordered table-striped table-hover'>
             <thead class='bg-primary'>
                 <tr>

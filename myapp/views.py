@@ -52,7 +52,6 @@ def delete(request):
     if request.method=='POST':
         id=request.POST['delid']
         obj=User.objects.all().get(id=id)
-        print(obj)
         obj.delete()
         data=User.objects.order_by('-id').values()
        # print(data)
@@ -76,4 +75,17 @@ def edit(request):
                 return JsonResponse({'status':'got','data_list':data_list})
         else:
             return JsonResponse({'status':'notgot'})
+
+def search(request):
+    if request.method=='POST':
+        searchText=request.POST['searchText'].upper()
+        data=User.objects.filter(nm__startswith=searchText).order_by('-id').values()
+        data_list=list(data)
+        if data_list==[]:
+            return JsonResponse({'status':'notsearched'})
+        else:
+            return JsonResponse({'status':'searched','data_list':data_list})
+    else:
+        return JsonResponse({'status':'notsearched'})
+
         

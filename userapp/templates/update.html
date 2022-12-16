@@ -1,0 +1,40 @@
+{% load static %} 
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>CRUD OPERATION</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googlapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<link rel='stylesheet' href='{% static 'css/mystyle.css' %}'/>
+
+<style>
+</style>
+</head>
+<body style='background-image:url({% static 'images/bg.png' %});background-size:cover'>
+    <br><br><br> 
+    <div class='row'>
+        <div class='col-lg-3'></div>
+            <div class='col-lg-6'>
+                <h3 id='heading'>Update Emp Details</h3><br>
+                <form method='post' action='/updateData/'>
+                    {% csrf_token %}
+                    {% for x in param %}
+                    <input type='hidden' name='uid' class='form-control' value="{{x.id}}"/> <br><br>
+                    <input type='text' name='unm' class='form-control' value="{{x.nm}}"/> <br><br>
+                    <input type='text' name='umob' class='form-control' value="{{x.mob}}"/> <br><br>
+                    <input type='text' name='ucity' class='form-control' value="{{x.city}}"/> <br><br>
+                    {% endfor %}
+                    <input type='submit' name='' value='Update Data' class='btn btn-success'/> 
+                </form>
+    </div>
+     <div class='col-sm-3'></div>
+    </div>
+</body>
+</html>

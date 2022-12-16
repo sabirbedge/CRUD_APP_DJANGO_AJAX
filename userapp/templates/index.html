@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>CRUD OPERATION</title>
+<link rel='stylesheet' href="{% static 'css/mystyle.css' %}"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googlapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<style>
+</style>
+</head>
+<body style='background-image:url({% static 'images/bg.png' %});background-size:cover'>
+    <!--<img src="{% static 'images/bg.jpg' %}"/>-->
+ <!-- Modal -->
+ <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Employee Details</h4>
+        </div>
+        <div class="modal-body">
+          <form method='post' action='' enctype='multipart/form-data'>
+            {% csrf_token %}
+            <input type='hidden' name='optype' value='addEmp'/>
+          <input type='text' name='nm' class='form-control' placeholder='Enter Name'> <br>
+          <input type='number' name='mob' class='form-control' placeholder='Enter Mobile'> <br>
+          <input type='text' name='city' class='form-control' placeholder='Enter City'> <br>
+         <!-- <input type='file' name='img' class='form-control' accept='image/*'><br>-->
+          <input type='submit' class='btn btn-success' value='Add Emp' name='addBtn'>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Ended -->
+    <br><br>
+    <div class='row'>
+        <div class='col-lg-3'>
+        <center>    <button class='btn  btn-info' data-toggle="modal" data-target="#myModal">Add Emp_Details</button></center>
+        </div>
+            <div class='col-lg-6'>
+              <h3 id='heading'><center>CRUD OPERATION IN DJANGO</center></h3><br>
+                <table class='table table-bordered table-striped bg-info'>
+                    <thead class='bg-primary'>
+                    <th>ID</th>
+                    <th>Emp_Name</th>
+                    <th>Emp_Mobile</th>
+                    <th>Emp_City</th>
+                    <th>Actions</th>
+                    </thead>
+                    <tbody>
+                        {% for x in param %}
+                        <tr>
+                            <td>{{x.id}}</td>
+                            <td>{{x.nm|upper}}</td>
+                            <td>{{x.mob}}</td>
+                            <td>{{x.city|upper}}</td>
+                            <td>           
+                              <a href="update/{{x.id}}" >
+                                <span class="glyphicon glyphicon-edit text-success"></span>
+                              </a>         
+                              <a href="delete/{{x.id}}">
+                                <span class="glyphicon glyphicon-trash text-danger"></span>
+                              </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+    </div>
+     <div class='col-sm-3'></div>
+    </div>
+</body>
+</html>
